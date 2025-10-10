@@ -3,7 +3,7 @@
 Django-приложение для работы с данными о продажах в XML.
 
 ## Установка
-1. Клонируйте репо: `git clone https://github.com/твой_логин/sales-xml-app.git`
+1. Клонируйте репо: `git clone https://github.com/ZEDDTAY8/laba3Xml`
 2. Создайте venv: `python -m venv venv`
 3. Активируйте: `venv\Scripts\activate` (Windows) или `source venv/bin/activate` (Linux)
 4. Установите зависимости: `pip install -r requirements.txt`
