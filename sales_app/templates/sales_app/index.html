@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales XML App</title>
+    <link rel="stylesheet" href="{% static 'sales_app/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Приложение для продаж в XML</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Ввод данных о продаже</h2>
+            <form method="post" action="{% url 'sales_app:save_to_xml' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Сохранить в XML</button>
+            </form>
+        </section>
+        <section>
+            <h2>Загрузка XML-файла</h2>
+            <form method="post" action="{% url 'sales_app:upload_xml' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="xml_file" accept=".xml">
+                <button type="submit">Загрузить</button>
+            </form>
+            {% if error %}<p style="color: red;">{{ error }}</p>{% endif %}
+        </section>
+        <section>
+            <h2>Содержимое XML-файлов</h2>
+            {% if not has_files %}
+                <p>Нет XML-файлов в папке.</p>
+            {% else %}
+                {% for content in xml_contents %}
+                    <h3>Файл: {{ content.file }}</h3>
+                    {% if content.error %}
+                        <p style="color: red;">{{ content.error }}</p>
+                    {% else %}
+                        <ul>
+                            {% for sale in content.sales %}
+                                <li>ID: {{ sale.id }}, Товар: {{ sale.product }}, Цена: {{ sale.price }}, Количество: {{ sale.quantity }}, Дата: {{ sale.date }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
