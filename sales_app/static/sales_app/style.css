@@ -1,2 +1,114 @@
-body { font-family: Arial; }
-section { margin-bottom: 2rem; }
+/* Цветовая гамма */
+:root {
+    --primary-blue: #1a3b5d;
+    --secondary-blue: #2c5282;
+    --accent-purple: #6b46c1;
+    --light-blue: #a0c5e8;
+    --dark-blue: #0f1a2a;
+    --text-light: #e2e8f0;
+    --text-dark: #2d3748;
+}
+
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, var(--light-blue) 0%, #c4d4f0 100%);
+    color: var(--text-dark);
+}
+
+header {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-purple) 100%);
+    color: var(--text-light);
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+section {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--light-blue);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(26, 59, 93, 0.2);
+}
+
+h2 {
+    color: var(--accent-purple);
+    border-bottom: 3px solid var(--accent-purple);
+    padding-bottom: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+input, button {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 2px solid var(--light-blue);
+    border-radius: 8px;
+}
+
+button {
+    background: linear-gradient(90deg, var(--accent-purple) 0%, var(--primary-blue) 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(107, 70, 193, 0.4);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f4f4f4;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+}
+
+p[style="color: red;"] {
+    font-weight: bold;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+    section {
+        padding: 1rem;
+    }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+    animation: fadeIn 0.6s ease-out;
+}
