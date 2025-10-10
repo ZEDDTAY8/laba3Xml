@@ -1,10 +1,10 @@
-import os
-import uuid
-import xml.etree.ElementTree as ET
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .forms import SaleForm
+import os
+import uuid
+import xml.etree.ElementTree as ET
 
 def index(request):
     form = SaleForm()
