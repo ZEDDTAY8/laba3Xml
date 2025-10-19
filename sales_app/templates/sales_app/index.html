@@ -41,8 +41,7 @@
                     {% else %}
                         <ul>
                             {% for sale in content.sales %}
-                                <li>ID: {{ sale.id }}{% for field in fields %}, {{ field.label }}: {{ sale|get_item:field.name }}{% endfor %}</li>
-                            {% endfor %}
+                            <li>ID: {{ sale.id }}{% for field in fields %}, {{ field.label }}: {% if field.type == 'bool' %}{% if sale|get_item:field.name %}Да{% else %}Нет{% endif %}{% else %}{{ sale|get_item:field.name }}{% endif %}{% endfor %}</li>                            {% endfor %}
                         </ul>
                     {% endif %}
                 {% endfor %}

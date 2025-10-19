@@ -26,6 +26,8 @@ def create_sale_form():
                 locals()[field['name']] = forms.IntegerField(min_value=field.get('min_value', 1), label=field['label'])
             elif field['type'] == 'date':
                 locals()[field['name']] = forms.DateField(label=field['label'], widget=forms.DateInput(attrs={'type': 'date'}))
+            elif field['type'] == 'bool':
+                locals()[field['name']] = forms.BooleanField(label=field['label'], required=False) 
     return SaleForm
 
 def index(request):
@@ -44,7 +46,11 @@ def index(request):
             for sale in root.findall('sale'):
                 data = {'id': sale.get('id')}
                 for field in FIELDS:
-                    data[field['name']] = sale.find(field['name']).text if sale.find(field['name']) is not None else ''
+                    text_value = sale.find(field['name']).text if sale.find(field['name']) is not None else ''
+                    if field['type'] == 'bool':
+                        data[field['name']] = text_value.lower() == 'true' 
+                    else:
+                        data[field['name']] = text_value
                 sales.append(data)
             xml_contents.append({'file': file, 'sales': sales})
         except ET.ParseError:
@@ -68,7 +74,10 @@ def save_to_xml(request):
             for field in FIELDS:
                 value = data.get(field['name'])
                 if value is not None:
-                    ET.SubElement(sale, field['name']).text = str(value) if field['type'] != 'date' else value.strftime('%Y-%m-%d')
+                    if field['type'] == 'bool':
+                        ET.SubElement(sale, field['name']).text = 'true' if value else 'false'  # Сохраняем как текст
+                    else:
+                        ET.SubElement(sale, field['name']).text = str(value) if field['type'] != 'date' else value.strftime('%Y-%m-%d')
 
             tree = ET.ElementTree(root)
             tree.write(file_path, encoding='utf-8', xml_declaration=True)
